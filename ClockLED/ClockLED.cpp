@@ -14,12 +14,15 @@ ClockLED::ClockLED(QWidget *parent)
 }
 
 void ClockLED::receive() {
-	QByteArray data = qsp.readAll();
-
+	QByteArray ba = qsp.readAll();
+	ui.plainTextEditOutput->setPlainText(ba);
 }
 
 void ClockLED::send() {
-
+	QString text = ui.lineEditSendText->text();
+	QByteArray ba = text.toLatin1();
+	const char *buffer = ba.data();
+	qsp.write(buffer);
 }
 
 void ClockLED::getPorts() {
