@@ -1,6 +1,6 @@
 #include "ClockLED.h"
 
-// https://doc.qt.io/qt-5/qtserialport-terminal-example.html
+// http://doc.qt.io/qt-5/qtserialport-terminal-example.html
 ClockLED::ClockLED(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -38,7 +38,7 @@ void ClockLED::connectSerial() {
 		qsp.setPort(portlist.at(ui.comboBoxSerialPort->currentIndex()));
 		status = qsp.open(QIODevice::ReadWrite);
 	} else {
-		if (qsp.open) {
+		if (qsp.isOpen()) {
 			qsp.close();
 			status = false;
 		}
