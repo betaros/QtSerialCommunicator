@@ -14,6 +14,7 @@ ClockLED::ClockLED(QWidget *parent)
 	updateTextfield("Start");
 
 	QObject::connect(ui.ButtonConnect, SIGNAL(pressed()), this, SLOT(connectSerial()));
+	QObject::connect(ui.ButtonSend, SIGNAL(pressed()), this, SLOT(send()));
 }
 
 /*
@@ -28,10 +29,20 @@ void ClockLED::receive() {
 * Send data to serial port
 */
 void ClockLED::send() {
-	QString text = ui.lineEditSendText->text();
-	QByteArray ba = text.toLatin1();
-	const char *buffer = ba.data();
-	qsp.write(buffer);
+	QString output;
+	if (status) {
+		QString text = ui.lineEditSendText->text();
+		QByteArray ba = text.toLatin1();
+		const char *buffer = ba.data();
+		qsp.write(buffer);
+
+		output = "send -> " + text;
+	} else {
+		output = "send -> not connected";
+	}
+	
+	ui.lineEditSendText->clear();
+	updateTextfield(output);
 }
 
 /*
