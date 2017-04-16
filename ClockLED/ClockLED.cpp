@@ -1,6 +1,9 @@
 #include "ClockLED.h"
 
 // http://doc.qt.io/qt-5/qtserialport-terminal-example.html
+/*
+* Constructor
+*/
 ClockLED::ClockLED(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -13,11 +16,17 @@ ClockLED::ClockLED(QWidget *parent)
 	QObject::connect(ui.ButtonConnect, SIGNAL(pressed()), this, SLOT(connectSerial()));
 }
 
+/*
+* Receive data from serial port
+*/
 void ClockLED::receive() {
 	QByteArray ba = qsp.readAll();
 	updateTextfield(ba);
 }
 
+/*
+* Send data to serial port
+*/
 void ClockLED::send() {
 	QString text = ui.lineEditSendText->text();
 	QByteArray ba = text.toLatin1();
@@ -25,6 +34,9 @@ void ClockLED::send() {
 	qsp.write(buffer);
 }
 
+/*
+* Get all available ports
+*/
 void ClockLED::getPorts() {
 	portlist = qspi.availablePorts();
 	ui.comboBoxSerialPort->clear();
@@ -35,6 +47,10 @@ void ClockLED::getPorts() {
 	}
 }
 
+/*
+* Slot for Connect Button
+* Connects to choosen serial port
+*/
 void ClockLED::connectSerial() {
 	if (status == false) {
 		qsp.setBaudRate(9600);
@@ -57,11 +73,17 @@ void ClockLED::connectSerial() {
 	}
 }
 
+/*
+* Updates text in textfield
+*/
 void ClockLED::updateTextfield(QString text) {
 	outputlist.push_back(text);
 	ui.plainTextEditOutput->appendPlainText(text);
 }
 
+/*
+* Export output to file
+*/
 bool ClockLED::exportOutput() {
 	QString filename = "output.txt";
 	QFile file(filename);
