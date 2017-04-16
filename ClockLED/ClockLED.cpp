@@ -8,14 +8,14 @@ ClockLED::ClockLED(QWidget *parent)
 	getPorts();
 	
 	status = false;
-	ui.plainTextEditOutput->setPlainText("Start");
+	updateTextfield("Start");
 
 	QObject::connect(ui.ButtonConnect, SIGNAL(pressed()), this, SLOT(connectSerial()));
 }
 
 void ClockLED::receive() {
 	QByteArray ba = qsp.readAll();
-	ui.plainTextEditOutput->setPlainText(ba);
+	updateTextfield(ba);
 }
 
 void ClockLED::send() {
@@ -48,12 +48,29 @@ void ClockLED::connectSerial() {
 	}
 	
 	if (status) {
-		ui.plainTextEditOutput->setPlainText("Connected");
+		updateTextfield("Connected");
 		ui.ButtonConnect->setText("Disconnect");
 		receive();
-	}
-	else {
-		ui.plainTextEditOutput->setPlainText("Disconnected");
+	} else {
+		updateTextfield("Disconnected");
 		ui.ButtonConnect->setText("Connect");
 	}
+}
+
+void ClockLED::updateTextfield(QString text) {
+	outputlist.push_back(text);
+	ui.plainTextEditOutput->appendPlainText(text);
+}
+
+bool ClockLED::exportOutput() {
+	QString filename = "output.txt";
+	QFile file(filename);
+	if (file.open(QIODevice::ReadWrite)) {
+		QTextStream stream(&file);
+		for each (QString text in outputlist)
+		{
+			stream << text << endl;
+		}
+	}
+	return false;
 }

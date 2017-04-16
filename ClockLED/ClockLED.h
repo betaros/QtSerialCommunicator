@@ -3,6 +3,8 @@
 #include <QtWidgets/QMainWindow>
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QTextStream>
+
 #include "ui_ClockLED.h"
 
 class ClockLED : public QMainWindow
@@ -17,6 +19,8 @@ public slots:
 	void send();
 	void getPorts();
 	void connectSerial();
+	void updateTextfield(QString text);
+	bool exportOutput();
 
 private:
 	Ui::ClockLEDClass ui;
@@ -24,5 +28,5 @@ private:
 	QList<QSerialPortInfo> portlist;
 	QSerialPortInfo qspi;
 	bool status;
-
+	QList<QString> outputlist;
 };
