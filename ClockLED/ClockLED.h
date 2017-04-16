@@ -17,16 +17,26 @@ public:
 public slots:
 	void receive();
 	void send();
-	void getPorts();
+
 	void connectSerial();
-	void updateTextfield(QString text);
 	bool exportOutput();
+
+	void setBaudrate();
+	void setDatabit();
+	void setParity();
+	void setStopbit();
 
 private:
 	Ui::ClockLEDClass ui;
+	
 	QSerialPort qsp;
-	QList<QSerialPortInfo> portlist;
 	QSerialPortInfo qspi;
-	bool status;
+
+	QList<QSerialPortInfo> portlist;
 	QList<QString> outputlist;
+
+	bool status;
+	
+	void updateTextfield(QString text);
+	void getPorts();
 };

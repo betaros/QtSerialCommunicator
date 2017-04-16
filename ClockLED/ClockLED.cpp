@@ -107,3 +107,91 @@ bool ClockLED::exportOutput() {
 	}
 	return false;
 }
+
+// Settings
+// http://doc.qt.io/qt-5/qserialport.html
+
+/* Baudrate */
+void ClockLED::setBaudrate() {
+	int i = 0;
+	switch (i) {
+	case 0:
+		qsp.setBaudRate(QSerialPort::Baud1200);
+		break;
+	case 1:
+		qsp.setBaudRate(QSerialPort::Baud2400);
+		break;
+	case 2:
+		qsp.setBaudRate(QSerialPort::Baud4800);
+		break;
+	case 4:
+		qsp.setBaudRate(QSerialPort::Baud19200);
+		break;
+	case 5:
+		qsp.setBaudRate(QSerialPort::Baud38400);
+		break;
+	case 6:
+		qsp.setBaudRate(QSerialPort::Baud57600);
+		break;
+	case 7:
+		qsp.setBaudRate(QSerialPort::Baud115200);
+		break;
+	default:
+		qsp.setBaudRate(QSerialPort::Baud9600);
+	}
+}
+
+/* Databit */
+void ClockLED::setDatabit() {
+	int i = 0;
+	switch (i) {
+	case 0:
+		qsp.setDataBits(QSerialPort::Data5);
+		break;
+	case 1:
+		qsp.setDataBits(QSerialPort::Data6);
+		break;
+	case 2:
+		qsp.setDataBits(QSerialPort::Data7);
+		break;
+	default:
+		qsp.setDataBits(QSerialPort::Data8);
+	}
+}
+
+/* Parity */
+void ClockLED::setParity() {
+	int i = 0;
+	switch (i) {
+	case 1:
+		qsp.setParity(QSerialPort::EvenParity);
+		break;
+	case 2:
+		qsp.setParity(QSerialPort::OddParity);
+		break;
+	case 3:
+		qsp.setParity(QSerialPort::SpaceParity);
+		break;
+	case 4:
+		qsp.setParity(QSerialPort::MarkParity);
+		break;
+	default:
+		qsp.setParity(QSerialPort::NoParity);
+	}
+}
+
+/* Stopbit */
+void ClockLED::setStopbit() {
+	int i = 0;
+	switch (i) {
+	case 1:
+		qsp.setStopBits(QSerialPort::OneAndHalfStop);
+		break;
+	case 2:
+		qsp.setStopBits(QSerialPort::TwoStop);
+		break;
+	default:
+		qsp.setStopBits(QSerialPort::OneStop);
+	}
+}
+
