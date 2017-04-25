@@ -17,6 +17,12 @@ ClockLED::ClockLED(QWidget *parent)
 	QObject::connect(ui.ButtonSend, SIGNAL(pressed()), this, SLOT(send()));
 
 	fillCheckboxes();
+	QObject::connect(ui.cbSettingBaud, SIGNAL(currentIndexChanged()), this, SLOT(setBaudrate()));
+	QObject::connect(ui.cbSettingDatabit, SIGNAL(currentIndexChanged()), this, SLOT(setDatabit()));
+	QObject::connect(ui.cbSettingParity, SIGNAL(currentIndexChanged()), this, SLOT(setParity()));
+	QObject::connect(ui.cbSettingStopbit, SIGNAL(currentIndexChanged()), this, SLOT(setStopbit()));
+
+	ui.statusBar->showMessage("Disconnected");
 }
 
 // http://doc.qt.io/qt-5/qtserialport-creaderasync-example.html
@@ -79,11 +85,13 @@ void ClockLED::connectSerial() {
 	
 	if (status) {
 		updateTextfield("Connected");
+		ui.statusBar->showMessage("Connected");
 		ui.ButtonConnect->setText("Disconnect");
 		receive();
 	} else {
 		updateTextfield("Disconnected");
 		ui.ButtonConnect->setText("Connect");
+		ui.statusBar->showMessage("Disconnected");
 	}
 }
 
@@ -98,7 +106,7 @@ void ClockLED::updateTextfield(QString text) {
 /*
 * Export output to file
 */
-bool ClockLED::exportOutput() {
+void ClockLED::exportOutput() {
 	QString filename = "output.txt";
 	QFile file(filename);
 	if (file.open(QIODevice::ReadWrite)) {
@@ -107,13 +115,15 @@ bool ClockLED::exportOutput() {
 		{
 			stream << text << endl;
 		}
+		file.close();
 	}
-	return false;
+
 }
 
 // Settings
 // http://doc.qt.io/qt-5/qserialport.html
 
+/* fills the checkboxes */
 void ClockLED::fillCheckboxes() {
 	QStringList baud = {"1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200"};
 	QStringList databit = {"5", "6", "7", "8"};

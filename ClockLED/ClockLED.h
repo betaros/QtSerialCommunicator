@@ -19,9 +19,8 @@ public slots:
 	void send();
 
 	void connectSerial();
-	bool exportOutput();
+	void exportOutput();
 
-	void fillCheckboxes();
 	void setBaudrate();
 	void setDatabit();
 	void setParity();
@@ -40,4 +39,5 @@ private:
 	
 	void updateTextfield(QString text);
 	void getPorts();
+	void fillCheckboxes();
 };
