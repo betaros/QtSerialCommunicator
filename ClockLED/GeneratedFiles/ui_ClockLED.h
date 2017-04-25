@@ -14,15 +14,17 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -32,45 +34,67 @@ class Ui_ClockLEDClass
 {
 public:
     QWidget *centralWidget;
+    QVBoxLayout *verticalLayout_3;
+    QTabWidget *tabCommunication;
+    QWidget *tab;
     QVBoxLayout *verticalLayout;
-    QWidget *widget_2;
+    QWidget *widgetConnection;
     QHBoxLayout *horizontalLayout;
     QComboBox *comboBoxSerialPort;
     QPushButton *ButtonConnect;
-    QWidget *widget;
-    QHBoxLayout *horizontalLayout_2;
+    QWidget *widgetSend;
+    QHBoxLayout *horizontalLayout_4;
     QLineEdit *lineEditSendText;
     QPushButton *ButtonSend;
-    QWidget *widget_3;
-    QHBoxLayout *horizontalLayout_3;
+    QWidget *widgetOutput;
+    QHBoxLayout *horizontalLayout_5;
     QPlainTextEdit *plainTextEditOutput;
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
+    QWidget *tabSettings;
+    QVBoxLayout *verticalLayout_2;
+    QWidget *widgetSettings;
+    QGridLayout *gridLayout;
+    QComboBox *cbSettingParity;
+    QComboBox *cbSettingStopbit;
+    QLabel *lblSettingDatabit;
+    QComboBox *cbSettingDatabit;
+    QLabel *lblSettingStopbit;
+    QLabel *lblSettingParity;
+    QLabel *lblSettingBaud;
+    QComboBox *cbSettingBaud;
+    QSpacerItem *verticalSpacer;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *ClockLEDClass)
     {
         if (ClockLEDClass->objectName().isEmpty())
             ClockLEDClass->setObjectName(QStringLiteral("ClockLEDClass"));
-        ClockLEDClass->resize(600, 400);
+        ClockLEDClass->resize(623, 483);
         centralWidget = new QWidget(ClockLEDClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        verticalLayout = new QVBoxLayout(centralWidget);
+        verticalLayout_3 = new QVBoxLayout(centralWidget);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        tabCommunication = new QTabWidget(centralWidget);
+        tabCommunication->setObjectName(QStringLiteral("tabCommunication"));
+        tab = new QWidget();
+        tab->setObjectName(QStringLiteral("tab"));
+        verticalLayout = new QVBoxLayout(tab);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        widget_2 = new QWidget(centralWidget);
-        widget_2->setObjectName(QStringLiteral("widget_2"));
-        horizontalLayout = new QHBoxLayout(widget_2);
+        widgetConnection = new QWidget(tab);
+        widgetConnection->setObjectName(QStringLiteral("widgetConnection"));
+        horizontalLayout = new QHBoxLayout(widgetConnection);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        comboBoxSerialPort = new QComboBox(widget_2);
+        comboBoxSerialPort = new QComboBox(widgetConnection);
         comboBoxSerialPort->setObjectName(QStringLiteral("comboBoxSerialPort"));
 
         horizontalLayout->addWidget(comboBoxSerialPort);
 
-        ButtonConnect = new QPushButton(widget_2);
+        ButtonConnect = new QPushButton(widgetConnection);
         ButtonConnect->setObjectName(QStringLiteral("ButtonConnect"));
         ButtonConnect->setMinimumSize(QSize(100, 0));
         ButtonConnect->setMaximumSize(QSize(100, 16777215));
@@ -78,56 +102,117 @@ public:
         horizontalLayout->addWidget(ButtonConnect);
 
 
-        verticalLayout->addWidget(widget_2);
+        verticalLayout->addWidget(widgetConnection);
 
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        horizontalLayout_2 = new QHBoxLayout(widget);
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        lineEditSendText = new QLineEdit(widget);
+        widgetSend = new QWidget(tab);
+        widgetSend->setObjectName(QStringLiteral("widgetSend"));
+        horizontalLayout_4 = new QHBoxLayout(widgetSend);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        lineEditSendText = new QLineEdit(widgetSend);
         lineEditSendText->setObjectName(QStringLiteral("lineEditSendText"));
 
-        horizontalLayout_2->addWidget(lineEditSendText);
+        horizontalLayout_4->addWidget(lineEditSendText);
 
-        ButtonSend = new QPushButton(widget);
+        ButtonSend = new QPushButton(widgetSend);
         ButtonSend->setObjectName(QStringLiteral("ButtonSend"));
         ButtonSend->setMinimumSize(QSize(100, 0));
         ButtonSend->setMaximumSize(QSize(100, 16777215));
 
-        horizontalLayout_2->addWidget(ButtonSend);
+        horizontalLayout_4->addWidget(ButtonSend);
 
 
-        verticalLayout->addWidget(widget);
+        verticalLayout->addWidget(widgetSend);
 
-        widget_3 = new QWidget(centralWidget);
-        widget_3->setObjectName(QStringLiteral("widget_3"));
-        horizontalLayout_3 = new QHBoxLayout(widget_3);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        plainTextEditOutput = new QPlainTextEdit(widget_3);
+        widgetOutput = new QWidget(tab);
+        widgetOutput->setObjectName(QStringLiteral("widgetOutput"));
+        horizontalLayout_5 = new QHBoxLayout(widgetOutput);
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        plainTextEditOutput = new QPlainTextEdit(widgetOutput);
         plainTextEditOutput->setObjectName(QStringLiteral("plainTextEditOutput"));
 
-        horizontalLayout_3->addWidget(plainTextEditOutput);
+        horizontalLayout_5->addWidget(plainTextEditOutput);
 
 
-        verticalLayout->addWidget(widget_3);
+        verticalLayout->addWidget(widgetOutput);
+
+        tabCommunication->addTab(tab, QString());
+        tabSettings = new QWidget();
+        tabSettings->setObjectName(QStringLiteral("tabSettings"));
+        verticalLayout_2 = new QVBoxLayout(tabSettings);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        widgetSettings = new QWidget(tabSettings);
+        widgetSettings->setObjectName(QStringLiteral("widgetSettings"));
+        widgetSettings->setEnabled(true);
+        gridLayout = new QGridLayout(widgetSettings);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        cbSettingParity = new QComboBox(widgetSettings);
+        cbSettingParity->setObjectName(QStringLiteral("cbSettingParity"));
+
+        gridLayout->addWidget(cbSettingParity, 3, 1, 1, 1);
+
+        cbSettingStopbit = new QComboBox(widgetSettings);
+        cbSettingStopbit->setObjectName(QStringLiteral("cbSettingStopbit"));
+
+        gridLayout->addWidget(cbSettingStopbit, 4, 1, 1, 1);
+
+        lblSettingDatabit = new QLabel(widgetSettings);
+        lblSettingDatabit->setObjectName(QStringLiteral("lblSettingDatabit"));
+
+        gridLayout->addWidget(lblSettingDatabit, 2, 0, 1, 1);
+
+        cbSettingDatabit = new QComboBox(widgetSettings);
+        cbSettingDatabit->setObjectName(QStringLiteral("cbSettingDatabit"));
+
+        gridLayout->addWidget(cbSettingDatabit, 2, 1, 1, 1);
+
+        lblSettingStopbit = new QLabel(widgetSettings);
+        lblSettingStopbit->setObjectName(QStringLiteral("lblSettingStopbit"));
+
+        gridLayout->addWidget(lblSettingStopbit, 4, 0, 1, 1);
+
+        lblSettingParity = new QLabel(widgetSettings);
+        lblSettingParity->setObjectName(QStringLiteral("lblSettingParity"));
+
+        gridLayout->addWidget(lblSettingParity, 3, 0, 1, 1);
+
+        lblSettingBaud = new QLabel(widgetSettings);
+        lblSettingBaud->setObjectName(QStringLiteral("lblSettingBaud"));
+
+        gridLayout->addWidget(lblSettingBaud, 1, 0, 1, 1);
+
+        cbSettingBaud = new QComboBox(widgetSettings);
+        cbSettingBaud->setObjectName(QStringLiteral("cbSettingBaud"));
+
+        gridLayout->addWidget(cbSettingBaud, 1, 1, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 5, 0, 1, 1);
+
+
+        verticalLayout_2->addWidget(widgetSettings);
+
+        tabCommunication->addTab(tabSettings, QString());
+
+        verticalLayout_3->addWidget(tabCommunication);
 
         ClockLEDClass->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(ClockLEDClass);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 21));
-        ClockLEDClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(ClockLEDClass);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        ClockLEDClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(ClockLEDClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         ClockLEDClass->setStatusBar(statusBar);
 
         retranslateUi(ClockLEDClass);
+
+        tabCommunication->setCurrentIndex(0);
+
 
         QMetaObject::connectSlotsByName(ClockLEDClass);
     } // setupUi
@@ -137,6 +222,12 @@ public:
         ClockLEDClass->setWindowTitle(QApplication::translate("ClockLEDClass", "ClockLED", Q_NULLPTR));
         ButtonConnect->setText(QApplication::translate("ClockLEDClass", "Connect", Q_NULLPTR));
         ButtonSend->setText(QApplication::translate("ClockLEDClass", "Send", Q_NULLPTR));
+        tabCommunication->setTabText(tabCommunication->indexOf(tab), QApplication::translate("ClockLEDClass", "Communication", Q_NULLPTR));
+        lblSettingDatabit->setText(QApplication::translate("ClockLEDClass", "Databit", Q_NULLPTR));
+        lblSettingStopbit->setText(QApplication::translate("ClockLEDClass", "Stopbit", Q_NULLPTR));
+        lblSettingParity->setText(QApplication::translate("ClockLEDClass", "Parity", Q_NULLPTR));
+        lblSettingBaud->setText(QApplication::translate("ClockLEDClass", "Baud", Q_NULLPTR));
+        tabCommunication->setTabText(tabCommunication->indexOf(tabSettings), QApplication::translate("ClockLEDClass", "Settings", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -15,8 +15,11 @@ ClockLED::ClockLED(QWidget *parent)
 
 	QObject::connect(ui.ButtonConnect, SIGNAL(pressed()), this, SLOT(connectSerial()));
 	QObject::connect(ui.ButtonSend, SIGNAL(pressed()), this, SLOT(send()));
+
+	fillCheckboxes();
 }
 
+// http://doc.qt.io/qt-5/qtserialport-creaderasync-example.html
 /*
 * Receive data from serial port
 */
@@ -111,9 +114,32 @@ bool ClockLED::exportOutput() {
 // Settings
 // http://doc.qt.io/qt-5/qserialport.html
 
+void ClockLED::fillCheckboxes() {
+	QStringList baud = {"1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200"};
+	QStringList databit = {"5", "6", "7", "8"};
+	QStringList parity = {"NoParity", "EvenParity", "OddParity", "SpaceParity", "NoParity"};
+	QStringList stopbit = {"OneStop", "OneAndHalfStop", "TwoStop"};
+
+	ui.cbSettingBaud->addItems(baud);
+	ui.cbSettingBaud->setCurrentIndex(3);
+	setBaudrate();
+
+	ui.cbSettingDatabit->addItems(databit);
+	ui.cbSettingDatabit->setCurrentIndex(3);
+	setDatabit();
+
+	ui.cbSettingParity->addItems(parity);
+	ui.cbSettingParity->setCurrentIndex(0);
+	setParity();
+	
+	ui.cbSettingStopbit->addItems(stopbit);
+	ui.cbSettingStopbit->setCurrentIndex(0);
+	setStopbit();
+}
+
 /* Baudrate */
 void ClockLED::setBaudrate() {
-	int i = 0;
+	int i = ui.cbSettingBaud->currentIndex();
 	switch (i) {
 	case 0:
 		qsp.setBaudRate(QSerialPort::Baud1200);
@@ -143,7 +169,7 @@ void ClockLED::setBaudrate() {
 
 /* Databit */
 void ClockLED::setDatabit() {
-	int i = 0;
+	int i = ui.cbSettingDatabit->currentIndex();
 	switch (i) {
 	case 0:
 		qsp.setDataBits(QSerialPort::Data5);
@@ -161,7 +187,7 @@ void ClockLED::setDatabit() {
 
 /* Parity */
 void ClockLED::setParity() {
-	int i = 0;
+	int i = ui.cbSettingParity->currentIndex();
 	switch (i) {
 	case 1:
 		qsp.setParity(QSerialPort::EvenParity);
@@ -182,7 +208,7 @@ void ClockLED::setParity() {
 
 /* Stopbit */
 void ClockLED::setStopbit() {
-	int i = 0;
+	int i = ui.cbSettingStopbit->currentIndex();
 	switch (i) {
 	case 1:
 		qsp.setStopBits(QSerialPort::OneAndHalfStop);

@@ -21,6 +21,7 @@ public slots:
 	void connectSerial();
 	bool exportOutput();
 
+	void fillCheckboxes();
 	void setBaudrate();
 	void setDatabit();
 	void setParity();
