@@ -73,7 +73,6 @@ void ClockLED::getPorts() {
 */
 void ClockLED::connectSerial() {
 	if (status == false) {
-		qsp.setBaudRate(9600);
 		qsp.setPort(portlist.at(ui.comboBoxSerialPort->currentIndex()));
 		status = qsp.open(QIODevice::ReadWrite);
 	} else {
@@ -127,7 +126,7 @@ void ClockLED::exportOutput() {
 void ClockLED::fillCheckboxes() {
 	QStringList baud = {"1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200"};
 	QStringList databit = {"5", "6", "7", "8"};
-	QStringList parity = {"NoParity", "EvenParity", "OddParity", "SpaceParity", "NoParity"};
+	QStringList parity = {"NoParity", "EvenParity", "OddParity", "SpaceParity"};
 	QStringList stopbit = {"OneStop", "OneAndHalfStop", "TwoStop"};
 
 	ui.cbSettingBaud->addItems(baud);
