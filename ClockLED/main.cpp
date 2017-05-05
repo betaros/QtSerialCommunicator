@@ -1,5 +1,4 @@
 #include "ClockLED.h"
-#include <QtWidgets/QApplication>
 
 /*
 * Main Class

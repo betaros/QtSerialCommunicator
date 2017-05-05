@@ -1,10 +1,6 @@
 #pragma once
 
-#include <QtWidgets/QMainWindow>
-#include <QSerialPort>
-#include <QSerialPortInfo>
-#include <QTextStream>
-
+#include "Includes.h"
 #include "ui_ClockLED.h"
 
 class ClockLED : public QMainWindow
@@ -17,6 +13,7 @@ public:
 public slots:
 	void receive();
 	void send();
+  void sendToQueue();
 
 	void connectSerial();
 	void exportOutput();
@@ -25,6 +22,7 @@ public slots:
 	void setDatabit();
 	void setParity();
 	void setStopbit();
+  void setFlowcontrol();
 
 private:
 	Ui::ClockLEDClass ui;
@@ -36,8 +34,11 @@ private:
 	QList<QString> outputlist;
 
 	bool status;
+  bool available;
 	
 	void updateTextfield(QString text);
 	void getPorts();
 	void fillCheckboxes();
+
+  QQueue<QString> sendqueue;
 };

@@ -62,6 +62,8 @@ public:
     QLabel *lblSettingBaud;
     QComboBox *cbSettingBaud;
     QSpacerItem *verticalSpacer;
+    QLabel *lblSettingFlowcontrol;
+    QComboBox *cbSettingFlowcontrol;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *ClockLEDClass)
@@ -195,7 +197,17 @@ public:
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer, 5, 0, 1, 1);
+        gridLayout->addItem(verticalSpacer, 6, 0, 1, 1);
+
+        lblSettingFlowcontrol = new QLabel(widgetSettings);
+        lblSettingFlowcontrol->setObjectName(QStringLiteral("lblSettingFlowcontrol"));
+
+        gridLayout->addWidget(lblSettingFlowcontrol, 5, 0, 1, 1);
+
+        cbSettingFlowcontrol = new QComboBox(widgetSettings);
+        cbSettingFlowcontrol->setObjectName(QStringLiteral("cbSettingFlowcontrol"));
+
+        gridLayout->addWidget(cbSettingFlowcontrol, 5, 1, 1, 1);
 
 
         verticalLayout_2->addWidget(widgetSettings);
@@ -227,6 +239,7 @@ public:
         lblSettingStopbit->setText(QApplication::translate("ClockLEDClass", "Stopbit", Q_NULLPTR));
         lblSettingParity->setText(QApplication::translate("ClockLEDClass", "Parity", Q_NULLPTR));
         lblSettingBaud->setText(QApplication::translate("ClockLEDClass", "Baud", Q_NULLPTR));
+        lblSettingFlowcontrol->setText(QApplication::translate("ClockLEDClass", "Flowcontrol", Q_NULLPTR));
         tabCommunication->setTabText(tabCommunication->indexOf(tabSettings), QApplication::translate("ClockLEDClass", "Settings", Q_NULLPTR));
     } // retranslateUi
 

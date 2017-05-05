@@ -14,7 +14,7 @@ ClockLED::ClockLED(QWidget *parent)
 	updateTextfield("Start");
 
 	QObject::connect(ui.ButtonConnect, SIGNAL(pressed()), this, SLOT(connectSerial()));
-	QObject::connect(ui.ButtonSend, SIGNAL(pressed()), this, SLOT(send()));
+	QObject::connect(ui.ButtonSend, SIGNAL(pressed()), this, SLOT(sendToQueue()));
 
 	fillCheckboxes();
 	QObject::connect(ui.cbSettingBaud, SIGNAL(currentIndexChanged()), this, SLOT(setBaudrate()));
@@ -40,18 +40,32 @@ void ClockLED::receive() {
 void ClockLED::send() {
 	QString output;
 	if (status) {
-		QString text = ui.lineEditSendText->text();
-		QByteArray ba = text.toLatin1();
-		const char *buffer = ba.data();
-		qsp.write(buffer);
+    while (!sendqueue.isEmpty()) {
+      QString text = sendqueue.dequeue();
+      QByteArray ba = text.toLatin1();
+      const char *buffer = ba.data();
+      qsp.write(buffer);
 
-		output = "send -> " + text;
+      output = "send -> " + text;
+    }
 	} else {
 		output = "send -> not connected";
 	}
 	
 	ui.lineEditSendText->clear();
 	updateTextfield(output);
+}
+
+/*
+* Stores data in queue
+*/
+void ClockLED::sendToQueue() {
+  QString text = ui.lineEditSendText->text();
+  if (status) {
+    sendqueue.enqueue(text);
+  } else {
+
+  }
 }
 
 /*
@@ -73,24 +87,34 @@ void ClockLED::getPorts() {
 */
 void ClockLED::connectSerial() {
 	if (status == false) {
+    // Connect to device
 		qsp.setPort(portlist.at(ui.comboBoxSerialPort->currentIndex()));
 		status = qsp.open(QIODevice::ReadWrite);
+    if (status) {
+      // Connection successful
+      updateTextfield("Connected");
+      ui.statusBar->showMessage("Connected");
+      ui.ButtonConnect->setText("Disconnect");
+
+    } else {
+      // Connection failed
+      updateTextfield("Connection failed");
+      ui.statusBar->showMessage("Connection failed");
+    }
 	} else {
+    // Disconnect from device
 		if (qsp.isOpen()) {
 			qsp.close();
 			status = false;
 		}
-	}
-	
-	if (status) {
-		updateTextfield("Connected");
-		ui.statusBar->showMessage("Connected");
-		ui.ButtonConnect->setText("Disconnect");
-		receive();
-	} else {
-		updateTextfield("Disconnected");
-		ui.ButtonConnect->setText("Connect");
-		ui.statusBar->showMessage("Disconnected");
+    if (!status) {
+      updateTextfield("Disconnected");
+      ui.statusBar->showMessage("Disconnected");
+      ui.ButtonConnect->setText("Connect");
+    } else {
+      updateTextfield("Disconnection failed");
+      ui.statusBar->showMessage("Disconnection failed");
+    }    
 	}
 }
 
@@ -128,6 +152,7 @@ void ClockLED::fillCheckboxes() {
 	QStringList databit = {"5", "6", "7", "8"};
 	QStringList parity = {"NoParity", "EvenParity", "OddParity", "SpaceParity"};
 	QStringList stopbit = {"OneStop", "OneAndHalfStop", "TwoStop"};
+  QStringList flowcontrol = { "NoFlowControl", "HardwareControl", "SoftwareControl" };
 
 	ui.cbSettingBaud->addItems(baud);
 	ui.cbSettingBaud->setCurrentIndex(3);
@@ -144,6 +169,10 @@ void ClockLED::fillCheckboxes() {
 	ui.cbSettingStopbit->addItems(stopbit);
 	ui.cbSettingStopbit->setCurrentIndex(0);
 	setStopbit();
+
+  ui.cbSettingFlowcontrol->addItems(flowcontrol);
+  ui.cbSettingFlowcontrol->setCurrentIndex(0);
+  setFlowcontrol();
 }
 
 /* Baudrate */
@@ -230,3 +259,17 @@ void ClockLED::setStopbit() {
 	}
 }
 
+/* Stopbit */
+void ClockLED::setFlowcontrol() {
+  int i = ui.cbSettingFlowcontrol->currentIndex();
+  switch (i) {
+  case 1:
+    qsp.setFlowControl(QSerialPort::HardwareControl);
+    break;
+  case 2:
+    qsp.setFlowControl(QSerialPort::SoftwareControl);
+    break;
+  default:
+    qsp.setFlowControl(QSerialPort::NoFlowControl);
+  }
+}
