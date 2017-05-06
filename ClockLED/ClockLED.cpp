@@ -14,7 +14,7 @@ ClockLED::ClockLED(QWidget *parent)
 	updateTextfield("Start");
 
 	QObject::connect(ui.ButtonConnect, SIGNAL(pressed()), this, SLOT(connectSerial()));
-	QObject::connect(ui.ButtonSend, SIGNAL(pressed()), this, SLOT(sendToQueue()));
+	QObject::connect(ui.ButtonSend, SIGNAL(pressed()), this, SLOT(send()));
 
 	fillCheckboxes();
 	QObject::connect(ui.cbSettingBaud, SIGNAL(currentIndexChanged()), this, SLOT(setBaudrate()));
@@ -42,32 +42,18 @@ void ClockLED::receive() {
 void ClockLED::send() {
 	QString output;
 	if (status) {
-    while (!sendqueue.isEmpty()) {
-      QString text = sendqueue.dequeue();
-      QByteArray ba = text.toLatin1();
-      const char *buffer = ba.data();
-      qsp.write(buffer);
+    QString text = ui.lineEditSendText->text();
+    QByteArray ba = text.toLatin1();
+    const char *buffer = ba.data();
+    qsp.write(buffer);
 
-      output = "send -> " + text;
-    }
+    output = "send -> " + text;
 	} else {
 		output = "send -> not connected";
 	}
 	
 	ui.lineEditSendText->clear();
 	updateTextfield(output);
-}
-
-/*
-* Stores data in queue
-*/
-void ClockLED::sendToQueue() {
-  QString text = ui.lineEditSendText->text();
-  if (status) {
-    sendqueue.enqueue(text);
-  } else {
-
-  }
 }
 
 /*

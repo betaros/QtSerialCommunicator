@@ -13,7 +13,6 @@ public:
 public slots:
 	void receive();
 	void send();
-  void sendToQueue();
 
 	void connectSerial();
 	void exportOutput();
@@ -39,8 +38,6 @@ private:
 	void updateTextfield(QString text);
 	void getPorts();
 	void fillCheckboxes();
-
-  QQueue<QString> sendqueue;
 
   QStringList baud = { "1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200" };
   QStringList databit = { "5", "6", "7", "8" };
