@@ -11,8 +11,9 @@ void loop() {
     
   }
   digitalWrite(LEDpin, HIGH);
-  delay(2000);
-  Serial.print("Eingabe: ");
+  delay(1000);
+  Serial.print("Input: ");
   Serial.print(incoming);
   digitalWrite(LEDpin, LOW);
+  delay(200);
 }

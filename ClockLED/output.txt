@@ -1,0 +1,20 @@
+Start
+Connected
+Disconnected
+Connected
+send ->
+Disconnected
+ngabe: Test
+Eingabe: Test
+send -> Blakeks
+Eingabe: Test
+Eingabe: Blakeks
+Eingabe: Blakeks
+Eingabe: Blakeks
+Eingabe: Blakeks
+Eingabe: Blakeks
+Eingabe: Blakeks
+Eingabe: Blakeks
+Eingabe: Blakeks
+Eingabe: Blakeks
+Disconnected

@@ -49,6 +49,7 @@ public:
     QWidget *widgetOutput;
     QHBoxLayout *horizontalLayout_5;
     QPlainTextEdit *plainTextEditOutput;
+    QPushButton *ButtonExport;
     QWidget *tabSettings;
     QVBoxLayout *verticalLayout_2;
     QWidget *widgetSettings;
@@ -140,6 +141,11 @@ public:
 
 
         verticalLayout->addWidget(widgetOutput);
+
+        ButtonExport = new QPushButton(tab);
+        ButtonExport->setObjectName(QStringLiteral("ButtonExport"));
+
+        verticalLayout->addWidget(ButtonExport);
 
         tabCommunication->addTab(tab, QString());
         tabSettings = new QWidget();
@@ -234,6 +240,7 @@ public:
         ClockLEDClass->setWindowTitle(QApplication::translate("ClockLEDClass", "ClockLED", Q_NULLPTR));
         ButtonConnect->setText(QApplication::translate("ClockLEDClass", "Connect", Q_NULLPTR));
         ButtonSend->setText(QApplication::translate("ClockLEDClass", "Send", Q_NULLPTR));
+        ButtonExport->setText(QApplication::translate("ClockLEDClass", "Export", Q_NULLPTR));
         tabCommunication->setTabText(tabCommunication->indexOf(tab), QApplication::translate("ClockLEDClass", "Communication", Q_NULLPTR));
         lblSettingDatabit->setText(QApplication::translate("ClockLEDClass", "Databit", Q_NULLPTR));
         lblSettingStopbit->setText(QApplication::translate("ClockLEDClass", "Stopbit", Q_NULLPTR));

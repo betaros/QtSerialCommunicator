@@ -15,12 +15,13 @@ ClockLED::ClockLED(QWidget *parent)
 
 	QObject::connect(ui.ButtonConnect, SIGNAL(pressed()), this, SLOT(connectSerial()));
 	QObject::connect(ui.ButtonSend, SIGNAL(pressed()), this, SLOT(send()));
+  QObject::connect(ui.ButtonExport, SIGNAL(pressed()), this, SLOT(exportOutput()));
 
 	fillCheckboxes();
-	QObject::connect(ui.cbSettingBaud, SIGNAL(currentIndexChanged()), this, SLOT(setBaudrate()));
-	QObject::connect(ui.cbSettingDatabit, SIGNAL(currentIndexChanged()), this, SLOT(setDatabit()));
-	QObject::connect(ui.cbSettingParity, SIGNAL(currentIndexChanged()), this, SLOT(setParity()));
-	QObject::connect(ui.cbSettingStopbit, SIGNAL(currentIndexChanged()), this, SLOT(setStopbit()));
+	QObject::connect(ui.cbSettingBaud, SIGNAL(currentIndexChanged(int)), this, SLOT(setBaudrate()));
+	QObject::connect(ui.cbSettingDatabit, SIGNAL(currentIndexChanged(int)), this, SLOT(setDatabit()));
+	QObject::connect(ui.cbSettingParity, SIGNAL(currentIndexChanged(int)), this, SLOT(setParity()));
+	QObject::connect(ui.cbSettingStopbit, SIGNAL(currentIndexChanged(int)), this, SLOT(setStopbit()));
 
   QObject::connect(&qsp, &QSerialPort::readyRead, this, &ClockLED::receive);
 
@@ -130,7 +131,7 @@ void ClockLED::exportOutput() {
 		}
 		file.close();
 	}
-
+  ui.statusBar->showMessage("Exported to " + file.fileName());
 }
 
 // Settings
