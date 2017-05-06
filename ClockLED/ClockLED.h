@@ -41,4 +41,10 @@ private:
 	void fillCheckboxes();
 
   QQueue<QString> sendqueue;
+
+  QStringList baud = { "1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200" };
+  QStringList databit = { "5", "6", "7", "8" };
+  QStringList parity = { "NoParity", "EvenParity", "OddParity", "SpaceParity" };
+  QStringList stopbit = { "OneStop", "OneAndHalfStop", "TwoStop" };
+  QStringList flowcontrol = { "NoFlowControl", "HardwareControl", "SoftwareControl" };
 };

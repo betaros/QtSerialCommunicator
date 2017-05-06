@@ -22,6 +22,8 @@ ClockLED::ClockLED(QWidget *parent)
 	QObject::connect(ui.cbSettingParity, SIGNAL(currentIndexChanged()), this, SLOT(setParity()));
 	QObject::connect(ui.cbSettingStopbit, SIGNAL(currentIndexChanged()), this, SLOT(setStopbit()));
 
+  QObject::connect(&qsp, &QSerialPort::readyRead, this, &ClockLED::receive);
+
 	ui.statusBar->showMessage("Disconnected");
 }
 
@@ -92,6 +94,7 @@ void ClockLED::connectSerial() {
 		status = qsp.open(QIODevice::ReadWrite);
     if (status) {
       // Connection successful
+      QString settings;
       updateTextfield("Connected");
       ui.statusBar->showMessage("Connected");
       ui.ButtonConnect->setText("Disconnect");
@@ -122,7 +125,8 @@ void ClockLED::connectSerial() {
 * Updates text in textfield
 */
 void ClockLED::updateTextfield(QString text) {
-	outputlist.push_back(text);
+  text = text.simplified();
+  outputlist.push_back(text);
 	ui.plainTextEditOutput->appendPlainText(text);
 }
 
@@ -148,12 +152,6 @@ void ClockLED::exportOutput() {
 
 /* fills the checkboxes */
 void ClockLED::fillCheckboxes() {
-	QStringList baud = {"1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200"};
-	QStringList databit = {"5", "6", "7", "8"};
-	QStringList parity = {"NoParity", "EvenParity", "OddParity", "SpaceParity"};
-	QStringList stopbit = {"OneStop", "OneAndHalfStop", "TwoStop"};
-  QStringList flowcontrol = { "NoFlowControl", "HardwareControl", "SoftwareControl" };
-
 	ui.cbSettingBaud->addItems(baud);
 	ui.cbSettingBaud->setCurrentIndex(3);
 	setBaudrate();
