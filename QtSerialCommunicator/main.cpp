@@ -1,13 +1,11 @@
-#include "QtSerialCommunicator.h"
+#include "qtserialcommunicator.h"
+#include <QApplication>
 
-/*
-* Main Class
-* starts the GUI
-*/
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-  QtSerialCommunicator w;
-	w.show();
-	return a.exec();
+    QApplication a(argc, argv);
+    QtSerialCommunicator w;
+    w.show();
+
+    return a.exec();
 }
