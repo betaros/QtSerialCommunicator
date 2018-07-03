@@ -43,12 +43,12 @@ void QtSerialCommunicator::receive() {
 void QtSerialCommunicator::send() {
     QString output;
     if (status) {
-    QString text = ui.lineEditSendText->text();
-    QByteArray ba = text.toLatin1();
-    const char *buffer = ba.data();
-    qsp.write(buffer);
+        QString text = ui.lineEditSendText->text();
+        QByteArray ba = text.toLatin1();
+        const char *buffer = ba.data();
+        qsp.write(buffer);
 
-    output = "send -> " + text;
+        output = "send -> " + text;
     } else {
         output = "send -> not connected";
     }
